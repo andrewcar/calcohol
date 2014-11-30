@@ -17,6 +17,17 @@
 
 @implementation ViewController
 
+- (instancetype) init {
+    self = [super init];
+    
+    if (self) {
+        self.title = NSLocalizedString(@"Wine", @"wine");
+        [self.tabBarItem setTitlePositionAdjustment:UIOffsetMake(0, -18)];
+    }
+    
+    return self;
+}
+
 - (void)loadView {
     // Allocate and initialize the all-encompassing view.
     self.view = [[UIView alloc] init];
@@ -51,7 +62,7 @@
     [super viewDidLoad];
     
     // Set our primary view's background color to Light Gray color
-    self.view.backgroundColor = [UIColor blackColor];
+    self.view.backgroundColor = [UIColor colorWithRed:0.741 green:0.925 blue:0.714 alpha:1]; /*#bdecb6*/
     
     // Tells the text field that self, this instance of "ViewController" should be treated as the text field's delegate
     self.beerPercentTextField.delegate = self;
@@ -91,10 +102,7 @@
     self.beerPercentTextField.textAlignment = NSTextAlignmentCenter;
     self.beerPercentTextField.backgroundColor = [UIColor whiteColor];
     [self.beerPercentTextField setValue:[UIColor blackColor] forKeyPath:@"_placeholderLabel.textColor"];
-    
-    /* Add a title to the wine view controller */
-    self.title = NSLocalizedString(@"Wine", @"wine");
-    
+
     // Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -188,6 +196,9 @@
     
     /* Update the title */
     self.title = [NSString stringWithFormat:NSLocalizedString(@"Wine (%.0f %@)", nil), numberOfWineGlassesForEquivalentAlcoholAmount, wineText];
+    
+    /* Assign sender.value's int form to VC's tab bar item */
+    [self.tabBarItem setBadgeValue:[NSString stringWithFormat:@"%d", (int)sender.value]];
     
     [self.beerPercentTextField resignFirstResponder];
 }

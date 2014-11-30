@@ -17,6 +17,14 @@
 
 @implementation WhiskeyViewController
 
+- (instancetype) init {
+    self = [super init];
+    if (self) {
+        self.title = NSLocalizedString(@"Whiskey", nil);
+    }
+    return self;
+}
+
 - (void)loadView {
     // Allocate and initialize the all-encompassing view.
     self.view = [[UIView alloc] init];
@@ -90,7 +98,8 @@
     self.beerPercentTextField.textAlignment = NSTextAlignmentCenter;
     self.beerPercentTextField.backgroundColor = [UIColor whiteColor];
     [self.beerPercentTextField setValue:[UIColor blackColor] forKeyPath:@"_placeholderLabel.textColor"];
-    self.title = NSLocalizedString(@"Whiskey", @"whiskey");
+    self.view.backgroundColor = [UIColor colorWithRed:0.992 green:0.992 blue:0.588 alpha:1]; /*#fdfd96*/
+
 }
 
 - (void)viewWillLayoutSubviews {
@@ -171,6 +180,9 @@
     
     /* Update the title */
     self.title = [NSString stringWithFormat:NSLocalizedString(@"Whiskey (%.0f %@)", nil), numberOfWhiskeyGlassesForEquivalentAlcoholAmount, whiskeyText];
+    
+    /* Assign sender.value's int form to whiskeyVC's tab bar item */
+    [self.tabBarItem setBadgeValue:[NSString stringWithFormat:@"%d", (int)sender.value]];
 }
 
 - (void)tapGestureDidFire:(UITapGestureRecognizer *)sender {
