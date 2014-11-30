@@ -74,37 +74,26 @@
     self.resultLabel.numberOfLines = 0;
     self.beerCountLabel.numberOfLines = 0;
     
+    
+    /* Change the font, text color and alignment of the resultLabel */
     self.resultLabel.font = [UIFont fontWithName:@"Papyrus" size:22];
     self.resultLabel.textColor = [UIColor whiteColor];
     self.resultLabel.textAlignment = NSTextAlignmentCenter;
     
+    /* Change the font, text color and alignment of the beerCountLabel */
     self.beerCountLabel.font = [UIFont fontWithName:@"Papyrus" size:42];
     self.beerCountLabel.textColor = [UIColor orangeColor];
     self.beerCountLabel.textAlignment = NSTextAlignmentCenter;
     
+    /* Change the font, text color, alignment, background color and placeholder text of the beerPercentTextField */
     self.beerPercentTextField.font = [UIFont fontWithName:@"Papyrus" size:20];
     self.beerPercentTextField.textColor = [UIColor blackColor];
     self.beerPercentTextField.textAlignment = NSTextAlignmentCenter;
     self.beerPercentTextField.backgroundColor = [UIColor whiteColor];
-    
     [self.beerPercentTextField setValue:[UIColor blackColor] forKeyPath:@"_placeholderLabel.textColor"];
     
-    
-    
-//    NSArray *familyNames = [[NSArray alloc] initWithArray:[UIFont familyNames]];
-//    NSArray *fontNames;
-//    NSInteger indFamily, indFont;
-//    for (indFamily=0; indFamily<[familyNames count]; ++indFamily)
-//    {
-//        NSLog(@"Family name: %@", [familyNames objectAtIndex:indFamily]);
-//        fontNames = [[NSArray alloc] initWithArray:
-//                     [UIFont fontNamesForFamilyName:
-//                      [familyNames objectAtIndex:indFamily]]];
-//        for (indFont=0; indFont<[fontNames count]; ++indFont)
-//        {
-//            NSLog(@"    Font name: %@", [fontNames objectAtIndex:indFont]);
-//        }
-//    }
+    /* Add a title to the wine view controller */
+    self.title = NSLocalizedString(@"Wine", @"wine");
     
     // Do any additional setup after loading the view, typically from a nib.
 }
@@ -112,19 +101,24 @@
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     
+    /* Establish values */
     CGFloat viewWidth = self.view.bounds.size.width;
     CGFloat padding = 20;
     CGFloat itemWidth = viewWidth - padding - padding;
     CGFloat itemHeight = 40;
     
-    self.beerPercentTextField.frame = CGRectMake(padding, padding, itemWidth, itemHeight);
+    /* Place the beerPercentTextField at the top left +20 on each side */
+    self.beerPercentTextField.frame = CGRectMake(padding, padding *4, itemWidth, itemHeight);
     
+    /* Place the beerCountSlider at the bottom of the text field +20 */
     CGFloat bottomOfTextField = CGRectGetMaxY(self.beerPercentTextField.frame);
     self.beerCountSlider.frame = CGRectMake(padding, bottomOfTextField + padding, itemWidth, itemHeight);
     
+    /* Place the beerCountLabel at the bottom of the slider +20 */
     CGFloat bottomOfSlider = CGRectGetMaxY(self.beerCountSlider.frame);
     self.beerCountLabel.frame = CGRectMake(padding, bottomOfSlider + padding, itemWidth, itemHeight);
     
+    /* Place the resultLabel at the bottom of the beerCountLabel +20 */
     CGFloat bottomOfLabel = CGRectGetMaxY(self.beerCountLabel.frame);
     self.resultLabel.frame = CGRectMake(padding, bottomOfLabel + padding, itemWidth, itemHeight *2);
 }
@@ -136,8 +130,13 @@
 
 - (void)textFieldDidChange:(UITextField *)sender {
     // Make sure the text is a number
+    
+    /* Make a string for sender.text */
     NSString *enteredText = sender.text;
+    
+    /* Convert that text into a float */
     float enteredNumber = [enteredText floatValue];
+    
     if (enteredNumber == 0) {
         // The user typed 0 or something that is not a number, so clear the field
         sender.text = nil;
@@ -146,7 +145,10 @@
 
 - (void)sliderValueDidChange:(UISlider *)sender {
     NSLog(@"Slider value changed to %.0f.", sender.value);
+    
+    /* Update the beerCountLabel as the slider value changes with sender.value */
     self.beerCountLabel.text = [NSString stringWithFormat:@"%.0f", sender.value];
+    
     // First, calculate how much alcohol is in all those beers...
     
     int numberOfBeers = self.beerCountSlider.value;
@@ -184,7 +186,8 @@
     
     self.resultLabel.text = [NSString stringWithFormat:NSLocalizedString(@"%d %@ contains as much alcohol as %.0f %@ of wine.", nil), numberOfBeers, beerText, numberOfWineGlassesForEquivalentAlcoholAmount, wineText];
     
-    
+    /* Update the title */
+    self.title = [NSString stringWithFormat:NSLocalizedString(@"Wine (%.0f %@)", nil), numberOfWineGlassesForEquivalentAlcoholAmount, wineText];
     
     [self.beerPercentTextField resignFirstResponder];
 }
