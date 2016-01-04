@@ -87,17 +87,17 @@
     
     
     /* Change the font, text color and alignment of the resultLabel */
-    self.resultLabel.font = [UIFont fontWithName:@"Papyrus" size:22];
+    self.resultLabel.font = [UIFont systemFontOfSize:22];
     self.resultLabel.textColor = [UIColor whiteColor];
     self.resultLabel.textAlignment = NSTextAlignmentCenter;
     
     /* Change the font, text color and alignment of the beerCountLabel */
-    self.beerCountLabel.font = [UIFont fontWithName:@"Papyrus" size:42];
+    self.beerCountLabel.font = [UIFont systemFontOfSize:42];
     self.beerCountLabel.textColor = [UIColor orangeColor];
     self.beerCountLabel.textAlignment = NSTextAlignmentCenter;
     
     /* Change the font, text color, alignment, background color and placeholder text of the beerPercentTextField */
-    self.beerPercentTextField.font = [UIFont fontWithName:@"Papyrus" size:20];
+    self.beerPercentTextField.font = [UIFont systemFontOfSize:20];
     self.beerPercentTextField.textColor = [UIColor blackColor];
     self.beerPercentTextField.textAlignment = NSTextAlignmentCenter;
     self.beerPercentTextField.backgroundColor = [UIColor whiteColor];
